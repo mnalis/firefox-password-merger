@@ -15,6 +15,7 @@ That being said, script has several sanity checks and prints warning to STDERR i
 - make all exported `*.csv` files available if same directory on same machine
 - run `firefox-password-merger export1.csv export2.csv export3.csv > merged_passwords.csv`
 - check any warnings outputted to STDERR -- they might result in those entries being lost! If everything is ok, there should be no output in the terminal
+  - if there are any warnings, it is best to resolve them manually (e.g. deleting line from source .csv file which you do not want to keep) and then rerun the script
 - verify if `merged_passwords.csv` looks reasonable
 - in target firefox:
   - clear existing passwords via `...` / `Remove all passwords...`
