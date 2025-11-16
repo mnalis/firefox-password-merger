@@ -1,9 +1,11 @@
 # firefox-password-merger
-merges multiple exported firefox password .csv files in smart way
+merges multiple exported firefox password .csv files in smart way, keeping newest password (i.e. working one) for each  entry.
 
-This script was made because password import (at least in Firefox 140.5.0esr) is not smart, and will overwrite newer password with old expired ones.
+This script was made because password import (at least in Firefox 140.5.0esr) is not smart, and instead overwrites newer password with old (expired) ones!
 
 NO WARRANTY is provided. If it breaks, you get to keep both pieces.
+
+That being said, script has several sanity checks and prints warning to STDERR if anything looks suspicious.
 
 ## Usage:
 - make sure you have BACKUPS of all your data on all your browsers (i.e. `~/.mozilla/*`)
