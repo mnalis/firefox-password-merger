@@ -20,7 +20,7 @@ NO WARRANTY is provided. If it breaks, you get to keep both pieces.
   - check if all passwords work properly. If they do, you can repeat the process in other firefox instances/profiles
 
 - (optional) backup all source and destination .csv files in some archive protected with good password which you will remember and copy it to a safe place
-- `wipe *.csv` (`apt install wipe` in Debian) to securely delete all CSV file with plaintext so they cannot be recovered (do it on all machines where they were existing)
+- `wipe *.csv` (do `apt install wipe` in Debian first, if it is not installed) to securely delete all CSV file with plaintext so they cannot be recovered (do it on all machines where they were existing)
 
 
 ## Options:
