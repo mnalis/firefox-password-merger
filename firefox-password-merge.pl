@@ -21,22 +21,29 @@ my $expected_header = join(",", @header);
 my %entries;        # key: guid -> entry hashref
 my %seen_url_user;  # key: url|username -> guid
 
+if (!@ARGV) {
+    say STDERR "Usage:";
+    say STDERR "\t[DEBUG=1] $0 <input1.csv> <input2.csv> [input3.csv]... > output.csv";
+    say STDERR "\nAnything printed on STDERR should be dealt with and script rerun, until it runs without any warnings!";
+    exit 1;
+}
+
 my $csv = Text::CSV->new({ binary => 1, auto_diag => 1, strict => 1, strict_eol => 1, blank_is_undef => 1 });
 
-foreach my $file (@ARGV) {
-    open my $fh, "<:encoding(utf8)", $file
-        or die "Cannot open $file: $!";
+foreach my $inputfile (@ARGV) {
+    open my $fh, "<:encoding(utf8)", $inputfile
+        or die "Cannot open $inputfile: $!";
 
     my $row = $csv->getline($fh);
     my $hdr = join(",", @$row);
 
     # Header mismatch check
     if ($hdr ne $expected_header) {
-        say STDERR "ERROR: Header mismatch in file '$file'";
+        say STDERR "ERROR: Header mismatch in input file '$inputfile'";
         exit 1;
     }
 
-    # Process rows for current .csv file
+    # Process rows for current .csv input file
     while (my $r = $csv->getline($fh)) {
         my %rec;
         @rec{@header} = @$r;
