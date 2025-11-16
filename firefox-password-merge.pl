@@ -8,6 +8,7 @@ use Time::Piece;
 use open ':std', ':encoding(UTF-8)';
 use feature 'say';
 
+my $DEBUG = $ENV{'DEBUG'} || 0;
 
 # Expected header fields
 my @header = (
@@ -45,7 +46,7 @@ foreach my $file (@ARGV) {
 
         # Warn if url+username already seen with different GUID
         if (exists $seen_url_user{$key} && $seen_url_user{$key} ne $guid) {
-            say STDERR "NOTICE: url+username ($rec{url}, $rec{username}) appear under different GUIDs ($seen_url_user{$key} vs $guid)";
+            $DEBUG > 0 && say STDERR "NOTICE: url+username ($rec{url}, $rec{username}) appear under different GUIDs ($seen_url_user{$key} vs $guid)";
         }
         $seen_url_user{$key} = $guid;
 
@@ -98,7 +99,7 @@ $csv_out->print(*STDOUT, \@header);
 # Print rows
 foreach my $guid (sort keys %entries) {
     my @vals = @{ $entries{$guid} }{@header};
-    #say STDERR "DEBUG: printing GUID=$guid";
+    $DEBUG > 8 && say STDERR "DEBUG: printing GUID=$guid";
     $csv_out->print(*STDOUT, \@vals);
 }
 
