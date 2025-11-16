@@ -74,7 +74,17 @@ foreach my $inputfile (@ARGV) {
 
             if (($new_last > $old_last && $new_pwd < $old_pwd) ||
                 ($new_last < $old_last && $new_pwd > $old_pwd)) {
-                say STDERR "WARNING: GUID $guid conflict: one entry has newer timeLastUsed, other newer timePasswordChanged.";
+                no warnings 'uninitialized';    # only for this scope
+                if ( $old->{url} eq $rec{url} and
+                     $old->{username} eq $rec{username} and
+                     $old->{password} eq $rec{password} and
+                     $old->{httpRealm} eq $rec{httpRealm} and
+                     $old->{formActionOrigin} eq $rec{formActionOrigin}
+                ) {
+                    $DEBUG > 0 && say STDERR "NOTICE: GUID $guid conflict: data differs, and one entry has newer timeLastUsed, other newer timePasswordChanged, but data looks the same, so we'll just ignore one.";
+                } else {
+                    say STDERR "WARNING: GUID $guid conflict: data differs, and one entry has newer timeLastUsed, other newer timePasswordChanged! You should verify and delete obsolete one manually.";
+                }
             }
 
             # Choose best (newest password change; tie-break by last used)
